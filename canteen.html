@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CRPF 186BN KPKB Canteen demand </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #123249; /* Dark military blue background */
+      margin: 0;
+      padding: 0;
+      color: #fff;
+    }
+    header {
+      background-color: #5b0d6e;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    .sub-heading {
+      font-size: 16px;
+      color: #ccc;
+    }
+    .flag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 60px;
+    }
+    #searchBar {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 250px;
+      margin-top: 10px;
+    }
+    #product-list, #cart {
+      padding: 20px;
+    }
+    .product {
+      background-color: rgba(141, 14, 14, 0.1);
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .product img {
+      width: 100px;
+      height: auto;
+      border-radius: 8px;
+    }
+    button {
+      padding: 5px 10px;
+      margin-top: 5px;
+      background-color: #ffa500;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e69500;
+    }
+    a button {
+      background-color: #4CAF50;
+    }
+    a button:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>CRPF 186BN KPKB Canteen demand </h1>
+      <div class="sub-heading">Proudly Serving to the Brave soldiers of 186BN CRPF Jaipur Road Namsai Arunachal Pradesh</div>
+    </div>
+    <input type="text" id="searchBar" placeholder="Search products..." onkeyup="filterProducts()" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_the_Central_Reserve_Police_Force.svg" class="flag" alt="CRPF Flag">
+  </header>
+
+  <div id="product-list"></div>
+
+  <h2 style="text-align:center; color:#fff;">Your Cart</h2>
+  <div id="cart"></div>
+
+  <div style="text-align:center; padding:20px;">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSciMCT_h_1_0uCS0ZawqiN0Y8TXr-v2W94OIEi4gibkjc0pDg/viewform" target="_blank">
+      <button style="padding: 15px; font-size: 16px;">Submit Order via Google Form</button>
+    </a>
+  </div>
+
+  <script>
+    const products = [
+      { name: "ADDY GYM VEST RN 95 100", qty: 3, price: 130.77, image: "https://via.placeholder.com/100x100?text=Gym+Vest" },
+      { name: "TACTICAL VEST MULTIPOCKET", qty: 2, price: 1999.00, image: "https://via.placeholder.com/100x100?text=Vest" },
+      { name: "WALKIE TALKIE SET", qty: 3, price: 3599.00, image: "https://via.placeholder.com/100x100?text=Walkie" },
+      { name: "BUNKER LOCK WITH KEYS", qty: 5, price: 249.00, image: "https://via.placeholder.com/100x100?text=Lock" },
+      { name: "SHOE POLISH KIT", qty: 10, price: 179.00, image: "https://via.placeholder.com/100x100?text=Polish" },
+      { name: "ARMY WATER BOTTLE 1L", qty: 5, price: 120.00, image: "https://via.placeholder.com/100x100?text=Water+Bottle" },
+      { name: "MULTIPURPOSE CAMP KNIFE", qty: 10, price: 349.99, image: "https://via.placeholder.com/100x100?text=Knife" },
+      { name: "TACTICAL BOOTS SIZE 9", qty: 4, price: 1499.50, image: "https://via.placeholder.com/100x100?text=Boots" },
+      { name: "MILITARY CAP GREEN", qty: 8, price: 199.00, image: "https://via.placeholder.com/100x100?text=Cap" },
+      { name: "FLASHLIGHT LED", qty: 12, price: 399.00, image: "https://via.placeholder.com/100x100?text=Flashlight" },
+      { name: "BACKPACK 40L ARMY", qty: 6, price: 1299.00, image: "https://via.placeholder.com/100x100?text=Backpack" },
+      { name: "EMERGENCY FIRST AID KIT", qty: 7, price: 699.00, image: "https://via.placeholder.com/100x100?text=First+Aid" },
+      { name: "BLACK COMBAT BELT", qty: 15, price: 299.00, image: "https://via.placeholder.com/100x100?text=Belt" },
+      { name: "INSULATED FOOD BOX", qty: 9, price: 850.00, image: "https://via.placeholder.com/100x100?text=Lunch+Box" },
+      { name: "SUNGLASSES POLARIZED", qty: 6, price: 999.00, image: "https://via.placeholder.com/100x100?text=Sunglasses" },
+      { name: "CANTEEN STAINLESS STEEL", qty: 10, price: 220.00, image: "https://via.placeholder.com/100x100?text=Canteen" },
+      { name: "JUNGLE SURVIVAL KIT", qty: 5, price: 999.00, image: "https://via.placeholder.com/100x100?text=Survival+Kit" },
+      { name: "SLEEPING BAG WINTER", qty: 3, price: 2499.00, image: "https://via.placeholder.com/100x100?text=Sleeping+Bag" },
+      { name: "DIGITAL WRIST WATCH", qty: 8, price: 1499.00, image: "https://via.placeholder.com/100x100?text=Watch" },
+      { name: "RAINCOAT MILITARY GREEN", qty: 4, price: 899.00, image: "https://via.placeholder.com/100x100?text=Raincoat" },
+      { name: "TORCH WATERPROOF", qty: 6, price: 599.00, image: "https://via.placeholder.com/100x100?text=Torch" },
+      { name: "POWER BANK 20000mAh", qty: 10, price: 1799.00, image: "https://via.placeholder.com/100x100?text=Power+Bank" },
+      { name: "INSOLE COMFORT PAD", qty: 20, price: 149.00, image: "https://via.placeholder.com/100x100?text=Insole" },
+      { name: "GLOVES TACTICAL BLACK", qty: 7, price: 450.00, image: "https://via.placeholder.com/100x100?text=Gloves" },
+      { name: "MOSQUITO NET FOLDABLE", qty: 6, price: 799.00, image: "https://via.placeholder.com/100x100?text=Mosquito+Net" },
+      { name: "COLD CREAM WINTERCARE", qty: 15, price: 99.00, image: "https://via.placeholder.com/100x100?text=Cold+Cream" },
+      { name: "SUNSCREEN SPF50", qty: 12, price: 349.00, image: "https://via.placeholder.com/100x100?text=Sunscreen" },
+      { name: "SHAVING KIT TRAVEL", qty: 8, price: 499.00, image: "https://via.placeholder.com/100x100?text=Shaving+Kit" },
+      { name: "AROMA BATH SOAP", qty: 25, price: 49.00, image: "https://via.placeholder.com/100x100?text=Soap" },
+      { name: "ENERGY BARS PACK", qty: 30, price: 249.00, image: "https://via.placeholder.com/100x100?text=Energy+Bar" },
+      { name: "INSTANT COFFEE JAR", qty: 10, price: 349.00, image: "https://via.placeholder.com/100x100?text=Coffee" },
+      { name: "ARMY PRINT T-SHIRT L", qty: 6, price: 499.00, image: "https://via.placeholder.com/100x100?text=T-Shirt" },
+      { name: "STAINLESS CUTLERY SET", qty: 11, price: 299.00, image: "https://via.placeholder.com/100x100?text=Cutlery" },
+      { name: "MINI TOOL KIT", qty: 14, price: 599.00, image: "https://via.placeholder.com/100x100?text=Tool+Kit" },
+     { name: "CAMPING STOOL", qty: 4, price: 650.00, image: "https://via.placeholder.com/100x100?text=Stool" },
+     { name: "MAGNETIC COMPASS", qty: 9, price: 199.00, image: "https://via.placeholder.com/100x100?text=Compass" },
+      { name: "TRAVEL TOOTHBRUSH KIT", qty: 20, price: 120.00, image: "https://via.placeholder.com/100x100?text=Toothbrush" },
+     { name: "BISCUIT COMBAT PACK", qty: 15, price: 85.00, image: "https://via.placeholder.com/100x100?text=Biscuit" },
+     { name: "MULTI-SOCKET POWER STRIP", qty: 5, price: 699.00, image: "https://via.placeholder.com/100x100?text=Power+Strip" },
+     { name: "HAND SANITIZER 200ml", qty: 25, price: 99.00, image: "https://via.placeholder.com/100x100?text=Sanitizer" },
+     { name: "FACE MASK PACK", qty: 50, price: 150.00, image: "https://via.placeholder.com/100x100?text=Face+Mask" },
+     { name: "ARMY NOTEBOOK SET", qty: 18, price: 199.00, image: "https://via.placeholder.com/100x100?text=Notebook" },
+     { name: "TACTICAL ROPE 20M", qty: 6, price: 349.00, image: "https://via.placeholder.com/100x100?text=Rope" },
+     { name: "LENS CLEANING SPRAY", qty: 9, price: 129.00, image: "https://via.placeholder.com/100x100?text=Lens+Spray" },
+     { name: "STEEL MUG SET", qty: 10, price: 299.00, image: "https://via.placeholder.com/100x100?text=Mug" },
+     { name: "ARMY DIARY WITH PEN", qty: 13, price: 349.00, image: "https://via.placeholder.com/100x100?text=Diary" },
+     { name: "ELECTRIC KETTLE 1.2L", qty: 4, price: 1099.00, image: "https://via.placeholder.com/100x100?text=Kettle" },
+     { name: "TACTICAL VEST MULTIPOCKET", qty: 2, price: 1999.00, image: "https://via.placeholder.com/100x100?text=Vest" },
+      { name: "AMT CIRCURITY 77CM", qty: 2, price: 5639.6, image: "https://via.placeholder.com/100x100?text=Circuity" },
+      { name: "BABY CARE GIFT BASKET", qty: 1, price: 472.3, image: "https://via.placeholder.com/100x100?text=Baby+Basket" }
+   ];
+
+    let cart = [];
+
+    function displayProducts(list = products) {
+      const container = document.getElementById("product-list");
+      container.innerHTML = "";
+      list.forEach((product) => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" />
+          <div>
+            <h3>${product.name}</h3>
+            <p>Available: ${product.qty}</p>
+            <p>Price: ₹${product.price.toFixed(2)}</p>
+            <button onclick="addToCartByName('${product.name}')">Add to Cart</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function addToCartByName(name) {
+      const product = products.find(p => p.name === name);
+      const existing = cart.find(item => item.name === product.name);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      displayCart();
+    }
+
+    function displayCart() {
+      const cartDiv = document.getElementById("cart");
+      let totalQty = 0;
+      let totalPrice = 0;
+      cartDiv.innerHTML = cart.map(item => {
+        totalQty += item.qty;
+        totalPrice += item.qty * item.price;
+        return `<p>${item.name} x ${item.qty} = ₹${(item.qty * item.price).toFixed(2)}</p>`;
+      }).join("");
+      cartDiv.innerHTML += `<h3>Total Quantity: ${totalQty}</h3>`;
+      cartDiv.innerHTML += `<h3>Total Amount: ₹${totalPrice.toFixed(2)}</h3>`;
+    }
+
+    function filterProducts() {
+      const term = document.getElementById("searchBar").value.toLowerCase();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+      displayProducts(filtered);
+    }
+
+    displayProducts();
+  </script>
+</body>
+</html>
